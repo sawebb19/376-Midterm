@@ -7,8 +7,8 @@ from game_objects import *
 from game import *
 
 def main():
-    s = Scene('scene1', [], [])
-    e = Engine('assignment1', s)
+    s = Scene('Platformer', [], [])
+    e = Engine('Midterm', s)
     z = Zombie()
     s.drawables.add(z)
     s.updateables.add(z)
