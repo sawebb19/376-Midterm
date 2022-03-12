@@ -1,5 +1,5 @@
 import sys
-sys.path.append("../CIS-376-Pygame-Engine")
+sys.path.append("../CIS-376-Pygame-Engine/")
 
 from Engine import *
 from Scene import *
@@ -8,7 +8,7 @@ import pygame as pg
 
 class Enemy(DUGameObject):
     def __init__(self, x=0, y=0):
-        super.__init__()
+        super().__init__()
         self.images = []
         self.images.append([])
         self.images.append([])
@@ -31,7 +31,7 @@ class Enemy(DUGameObject):
     def update(self):
         #pass
         # Zombie code that might be helpful for walking
-        self.walk_time = self.walk_time + Engine.Engine.delta_time
+        self.walk_time = self.walk_time + Engine.deltaTime
         if self.walk_time > .1:
             self.current_frame = (self.current_frame + 1 ) % 10
             self.walk_time = 0
@@ -39,10 +39,10 @@ class Enemy(DUGameObject):
         dir = 1
         if self.direction == 1:
             dir = -1
-        self.x = self.x + 100 * Engine.Engine.delta_time * dir  * self.speed
+        self.x = self.x + 100 * Engine.deltaTime * dir  * self.speed
         self.rect.x = self.x
         self.rect.y = self.y
-        for event in Engine.Engine.events:
+        for event in Engine.events:
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_a:
                     self.direction = 1
