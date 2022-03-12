@@ -5,11 +5,12 @@ from Engine import *
 from Scene import *
 from game_objects import *
 from game import *
+import pygame as pg
 
 def main():
     s = Scene('Platformer', [], [])
     e = Engine('Midterm', s)
-    z = Zombie()
+    z = Enemy()
     s.drawables.add(z)
     s.updateables.add(z)
     e.run()
