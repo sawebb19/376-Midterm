@@ -7,7 +7,7 @@ from game_objects import *
 import pygame as pg
 
 class Enemy(DUGameObject):
-    def __init__(self, x=0, y=0):
+    def __init__(self, eng, x=0, y=0):
         super().__init__()
         self.images = []
         self.images.append([])
@@ -21,17 +21,18 @@ class Enemy(DUGameObject):
         self.rect = self.image.get_rect()
         self.dirty = 2
         self.direction = 0
-        self.speed = 0
+        self.speed = 1
         self.x = x
         self.y = y
         self.walk_time = 0
         self.current_frame = 0
+        self.eng = eng
 
     # TODO
     def update(self):
         #pass
         # Zombie code that might be helpful for walking
-        self.walk_time = self.walk_time + Engine.deltaTime
+        self.walk_time = self.walk_time + self.eng.deltaTime
         if self.walk_time > .1:
             self.current_frame = (self.current_frame + 1 ) % 10
             self.walk_time = 0
@@ -39,10 +40,10 @@ class Enemy(DUGameObject):
         dir = 1
         if self.direction == 1:
             dir = -1
-        self.x = self.x + 100 * Engine.deltaTime * dir  * self.speed
+        self.x = self.x + 100 * dir * self.speed * self.eng.deltaTime
         self.rect.x = self.x
         self.rect.y = self.y
-        for event in Engine.events:
+        for event in self.eng.events:
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_a:
                     self.direction = 1

@@ -11,7 +11,7 @@ import pygame as pg
 def main():
     s = Scene('Platformer', [], [])
     e = Engine('Midterm', s)
-    z = Enemy()
+    z = Enemy(e)
     s.drawables.add(z)
     s.updateables.add(z)
     e.run()
