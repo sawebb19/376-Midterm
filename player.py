@@ -66,6 +66,9 @@ class Score(UGameObject):
 
     def update(self):
         self.score = self.score + self.eng.deltaTime
+        # Win condition
+        if self.score >= 10000:
+            self.eng.end()
         print(self.score)
 
     def getScore(self):
