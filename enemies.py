@@ -20,8 +20,8 @@ class Enemy(DUGameObject):
         self.image = self.images[0][0]
         self.rect = self.image.get_rect()
         self.dirty = 2
-        self.direction = 0
-        self.speed = 1
+        self.direction = -1
+        self.speed = -1
         self.x = x
         self.y = y
         self.walk_time = 0
@@ -40,6 +40,10 @@ class Enemy(DUGameObject):
         dir = 1
         if self.direction == 1:
             dir = -1
+        # FIXME: flip sprite, go left when right edge of sprite hits right edge of screen
+        if (self.x <= 0 and dir == 1) or self.x >= self.eng.width:
+            self.direction = self.direction * -1
+            dir *= -1
         self.x = self.x + 100 * dir * self.speed * self.eng.deltaTime
         self.rect.x = self.x
         self.rect.y = self.y
