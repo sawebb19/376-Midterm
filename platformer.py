@@ -18,6 +18,9 @@ def main():
     p = Player(e, y=600)
     s.drawables.add(p)
     s.updateables.add(p)
+    score = Score(e)
+    # FIXME: Attribute error
+    #s.updateables.add(score)
     e.run()
 
 main()

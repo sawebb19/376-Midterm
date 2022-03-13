@@ -39,8 +39,8 @@ class Player(DUGameObject):
             self.walk_time = 0
         self.image = self.images[self.direction][self.current_frame]
         dir = 1
-        if self.direction == 1:
-            dir = -1
+        #if self.direction == 1:
+            #dir = -1
         self.x = self.x + 100 * dir * self.speed * self.eng.deltaTime
         self.rect.x = self.x
         self.rect.y = self.y
@@ -57,3 +57,16 @@ class Player(DUGameObject):
 # TODO - having a camera tied to the player should be easier to manage
 class Camera(UGameObject):
     pass
+
+class Score(UGameObject):
+    def __init__(self, eng):
+        super().__init__()
+        self.score = 0
+        self.eng = eng
+
+    def update(self):
+        self.score = self.score + self.eng.deltaTime
+        print(self.score)
+
+    def getScore(self):
+        return self.score
