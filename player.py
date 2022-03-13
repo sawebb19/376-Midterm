@@ -11,19 +11,16 @@ class Player(DUGameObject):
         super().__init__()
 
         # TODO: Have different sprites for player
-        self.images = []
-        self.images.append([])
-        self.images.append([])
+        self.images = [[],[]] # [0][x] for facing left, [1][x] for facing right
         for i in range(1,11):
-            self.images[0].append(pg.image.load("./zombie/Walk ("+str(i)+").png").convert_alpha())
-            self.images[0][i-1] = self.images[0][i-1].subsurface(self.images[0][i-1].get_bounding_rect())
-            self.images[0][i-1] = pg.transform.scale(self.images[0][i-1], (128, 128)) 
-            self.images[1].append(pg.transform.flip(self.images[0][i-1], True, False))
-        self.image = self.images[0][0]
+            self.images[1].append(pg.image.load("./zombie/Walk ("+str(i)+").png").convert_alpha())
+            self.images[1][i-1] = self.images[1][i-1].subsurface(self.images[1][i-1].get_bounding_rect())
+            self.images[1][i-1] = pg.transform.scale(self.images[1][i-1], (128, 128)) 
+            self.images[0].append(pg.transform.flip(self.images[1][i-1], True, False))
+        self.image = self.images[1][0]
         self.rect = self.image.get_rect()
-
         self.dirty = 2
-        self.direction = 0
+        self.direction = 1
         self.speed = 0
         self.x = x
         self.y = y
@@ -38,19 +35,21 @@ class Player(DUGameObject):
             self.current_frame = (self.current_frame + 1 ) % 10
             self.walk_time = 0
         self.image = self.images[self.direction][self.current_frame]
-        dir = 1
-        #if self.direction == 1:
-            #dir = -1
-        self.x = self.x + 100 * dir * self.speed * self.eng.deltaTime
+
+        self.x = self.x + 100 * (self.direction - 0.5) * -2 * self.speed * self.eng.deltaTime
         self.rect.x = self.x
         self.rect.y = self.y
+
         for event in self.eng.events:
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_a:
-                    self.direction = 1
-                if event.key == pg.K_d:
                     self.direction = 0
+                    self.speed = -1
+                if event.key == pg.K_d:
+                    self.direction = 1
                     self.image = pg.transform.flip(self.image, True, False)
+                    self.speed = -1
+        
         pg.draw.rect(self.image, (0, 0, 255), self.image.get_bounding_rect(), width=1)
         pg.draw.rect(self.image, (255, 0, 0), self.image.get_rect(), width=1)
 
