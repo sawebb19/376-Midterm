@@ -57,13 +57,13 @@ class Player(DUGameObject):
                     self.speed = -2
                 if (event.key == pg.K_SPACE and self.height == 15):
                     self.height = (self.height - 1) * -1
+
+        for object in self.eng.scene.updateables:
+            if self.x > self.eng.scene.updateables[object].x:
+                print("Collision?")
         
         pg.draw.rect(self.image, (0, 0, 255), self.image.get_bounding_rect(), width=1)
         pg.draw.rect(self.image, (255, 0, 0), self.image.get_rect(), width=1)
-
-# TODO - having a camera tied to the player should be easier to manage
-class Camera(UGameObject):
-    pass
 
 class Score(DUGameObject):
     def __init__(self, eng):
