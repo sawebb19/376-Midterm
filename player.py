@@ -30,6 +30,7 @@ class Player(DUGameObject):
         self.current_frame = 0
         self.eng = eng
         self.height = 15
+        self.fallcheck = False
 
     # TODO
     def update(self):
@@ -41,31 +42,35 @@ class Player(DUGameObject):
 
         self.x = self.x + 100 * (self.direction - 0.5) * -2 * self.speed * self.eng.deltaTime
 
-        if self.height != 15:
+        if self.height != 15 or self.fallcheck:
             velocity = (40 * self.height + ((self.height ** 3) / 3)) * .03
             self.y += velocity
-            if velocity <= 0:
-                if abs(self.rect.y - 355) < 3:
-                    if (self.rect.x > 600 and self.rect.x < 950) or (self.rect.x > 74 and self.rect.x < 424):
+            if velocity >= 0:
+                if abs(self.rect.y - 355) < 10:
+                    if (self.rect.x > 600 - 64 and self.rect.x < 950 - 64) or (self.rect.x > 74 - 64 and self.rect.x < 424 - 64):
                         self.height = 14
                         self.y = 355
-                if abs(self.rect.y - 195) < 3:
-                    if (self.rect.x > 360 and self.rect.x < 660):
+                        self.fallcheck = True
+                    else:
+                        self.height = 10
+                if abs(self.rect.y - 195) < 10:
+                    if (self.rect.x > 360 - 64 and self.rect.x < 660 - 64):
                         self.height = 14
                         self.y = 195
+                        self.fallcheck = True
+                    else:
+                        self.height = 10
             self.height += 1
-
-        if self.rect.y <= 355 and ((self.rect.x > 600 and self.rect.x < 950) or (self.rect.x > 74 and self.rect.x < 424)):
-            self.height = 0
-
-        if self.rect.y <= 195 and (self.rect.x > 360 and self.rect.x < 660):
-            self.height = 0
 
         if self.rect.y > 515:
             self.y = 515
+            self.height = 15
+            self.fallcheck = False
 
         self.rect.x = self.x
         self.rect.y = self.y
+
+        print("X:",self.rect.x,"Y:",self.rect.y)
 
         for event in self.eng.events:
             if event.type == pg.KEYDOWN:
