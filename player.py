@@ -7,15 +7,15 @@ from Engine import *
 from Scene import *
 from game_objects import *
 import pygame as pg
+import time
 
 class Player(DUGameObject):
     def __init__(self, eng, x=0, y=0):
         super().__init__()
 
-        # TODO: Have different sprites for player
         self.images = [[],[]] # [0][x] for facing left, [1][x] for facing right
         for i in range(1,11):
-            self.images[1].append(pg.image.load("./zombie/Walk ("+str(i)+").png").convert_alpha())
+            self.images[1].append(pg.image.load("./player/Walk ("+str(i)+").png").convert_alpha())
             self.images[1][i-1] = self.images[1][i-1].subsurface(self.images[1][i-1].get_bounding_rect())
             self.images[1][i-1] = pg.transform.scale(self.images[1][i-1], (128, 128)) 
             self.images[0].append(pg.transform.flip(self.images[1][i-1], True, False))
@@ -32,7 +32,6 @@ class Player(DUGameObject):
         self.height = 15
         self.fallcheck = False
 
-    # TODO
     def update(self):
         self.walk_time = self.walk_time + self.eng.deltaTime
         if self.walk_time > .1:
@@ -69,9 +68,7 @@ class Player(DUGameObject):
 
         self.rect.x = self.x
         self.rect.y = self.y
-
-        print("X:",self.rect.x,"Y:",self.rect.y)
-
+        
         for event in self.eng.events:
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_a:
@@ -84,16 +81,15 @@ class Player(DUGameObject):
                 if (event.key == pg.K_SPACE and self.height == 15):
                     self.height = (self.height - 1) * -1
 
+        # Check for losing condition (player collides with enemy)
         for object in self.eng.scene.updateables:
             if isinstance(object, Enemy):
                 if object.rect.x < self.rect.x + 128 and object.rect.x + 128 > self.rect.x:
                     if object.rect.y < self.rect.y + 128 and object.rect.y + 128 > self.rect.y:
                         print("Lose")
+                        self.eng.screen.fill((0,0,0))
+                        time.sleep(5)
                         self.eng.end()
-
-        
-        pg.draw.rect(self.image, (0, 0, 255), self.image.get_bounding_rect(), width=1)
-        pg.draw.rect(self.image, (255, 0, 0), self.image.get_rect(), width=1)
 
 class Score(DUGameObject):
     def __init__(self, eng):
@@ -101,13 +97,18 @@ class Score(DUGameObject):
         self.score = 0
         self.eng = eng
 
+    # Score is the same as number of seconds of game time
     def update(self):
         self.score = self.score + self.eng.deltaTime
-        # Win condition
+        font = pg.font.Font('freesansbold.ttf', 32)
+        font.render('Score: ' + str(self.score), True, (0,255,0), (0,0,128))
+        # Win condition: Survive for 20 seconds
         if self.score >= 20:
             print("Win")
+            self.eng.screen.fill((0,0,0))
+            time.sleep(5)
             self.eng.end()
-        print(self.score)
+        print("Score: " + str(self.score))
 
     def getScore(self):
         return self.score

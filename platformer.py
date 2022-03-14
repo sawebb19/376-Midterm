@@ -6,12 +6,12 @@ from Scene import *
 from game_objects import *
 from enemies import *
 from player import *
-#from game import *
 import pygame as pg
 
 def main():
     s = Scene('Platformer', [], [])
     e = Engine('Midterm', s)
+    e.screen.blit(pg.image.load("./assets/map.png").convert_alpha(), (0,0))
     p = Player(e, x=10, y=515)
     s.drawables.add(p)
     s.updateables.add(p)
@@ -29,6 +29,6 @@ def main():
     s.updateables.add(z4)
     score = Score(e)
     s.updateables.add(score)
-    e.run()
+    e.run("./assets/map.png")
 
 main()
