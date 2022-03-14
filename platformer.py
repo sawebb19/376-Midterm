@@ -29,6 +29,6 @@ def main():
     s.updateables.add(z4)
     score = Score(e)
     s.updateables.add(score)
-    e.run()
+    e.run("./assets/map.png")
 
 main()
