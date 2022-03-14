@@ -28,7 +28,7 @@ class Enemy(DUGameObject):
         self.current_frame = 0
         self.eng = eng
 
-    # TODO
+    # TODO: add collision detection for player that results in a loss
     def update(self):
         #pass
         # Zombie code that might be helpful for walking
