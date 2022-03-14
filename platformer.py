@@ -12,10 +12,10 @@ import pygame as pg
 def main():
     s = Scene('Platformer', [], [])
     e = Engine('Midterm', s)
-    p = Player(e, x=10, y=600)
+    p = Player(e, x=10, y=515)
     s.drawables.add(p)
     s.updateables.add(p)
-    z = Enemy(e, x=850, y=600)
+    z = Enemy(e, x=850, y=515)
     s.drawables.add(z)
     s.updateables.add(z)
     score = Score(e)
