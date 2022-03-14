@@ -11,6 +11,7 @@ import pygame as pg
 def main():
     s = Scene('Platformer', [], [])
     e = Engine('Midterm', s)
+    e.screen.blit(pg.image.load("./assets/map.png").convert_alpha(), (0,0))
     p = Player(e, x=10, y=515)
     s.drawables.add(p)
     s.updateables.add(p)

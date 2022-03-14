@@ -7,6 +7,7 @@ from Engine import *
 from Scene import *
 from game_objects import *
 import pygame as pg
+import time
 
 class Player(DUGameObject):
     def __init__(self, eng, x=0, y=0):
@@ -84,6 +85,8 @@ class Player(DUGameObject):
                 if object.rect.x < self.rect.x + 128 and object.rect.x + 128 > self.rect.x:
                     if object.rect.y < self.rect.y + 128 and object.rect.y + 128 > self.rect.y:
                         print("Lose")
+                        self.eng.screen.fill((0,0,0))
+                        time.sleep(5)
                         self.eng.end()
 
 class Score(DUGameObject):
@@ -95,9 +98,13 @@ class Score(DUGameObject):
     # Score is the same as number of seconds of game time
     def update(self):
         self.score = self.score + self.eng.deltaTime
+        font = pg.font.Font('freesansbold.ttf', 32)
+        font.render('Score: ' + str(self.score), True, (0,255,0), (0,0,128))
         # Win condition: Survive for 20 seconds
         if self.score >= 20:
             print("Win")
+            self.eng.screen.fill((0,0,0))
+            time.sleep(5)
             self.eng.end()
         print("Score: " + str(self.score))
 
