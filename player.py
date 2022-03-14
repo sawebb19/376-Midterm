@@ -27,6 +27,7 @@ class Player(DUGameObject):
         self.walk_time = 0
         self.current_frame = 0
         self.eng = eng
+        self.height = 15
 
     # TODO
     def update(self):
@@ -37,6 +38,11 @@ class Player(DUGameObject):
         self.image = self.images[self.direction][self.current_frame]
 
         self.x = self.x + 100 * (self.direction - 0.5) * -2 * self.speed * self.eng.deltaTime
+
+        if self.height != 15:
+            self.y += (40 * self.height + ((self.height ** 3) / 3)) * self.eng.deltaTime
+            self.height += 1
+
         self.rect.x = self.x
         self.rect.y = self.y
 
@@ -44,11 +50,13 @@ class Player(DUGameObject):
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_a:
                     self.direction = 0
-                    self.speed = -1
+                    self.speed = -2
                 if event.key == pg.K_d:
                     self.direction = 1
                     self.image = pg.transform.flip(self.image, True, False)
-                    self.speed = -1
+                    self.speed = -2
+                if (event.key == pg.K_SPACE and self.height == 15):
+                    self.height = (self.height - 1) * -1
         
         pg.draw.rect(self.image, (0, 0, 255), self.image.get_bounding_rect(), width=1)
         pg.draw.rect(self.image, (255, 0, 0), self.image.get_rect(), width=1)
