@@ -28,23 +28,17 @@ class Enemy(DUGameObject):
         self.lb = lb
         self.rb = rb
 
-    # TODO: add collision detection for player that results in a loss
+    # Enemies simply walk back and forth, turning around at screen or platform edges
     def update(self):
-        #pass
-        # Zombie code that might be helpful for walking
         self.walk_time = self.walk_time + self.eng.deltaTime
         if self.walk_time > .1:
             self.current_frame = (self.current_frame + 1 ) % 10
             self.walk_time = 0
         self.image = self.images[self.direction][self.current_frame]
 
-        # FIXME: flip sprite, go left when right edge of sprite hits right edge of screen
         if (self.x <= self.lb or self.x >= self.rb - 128):
             self.direction = abs(self.direction - 1)
         self.x = self.x + 100 * (self.direction - 0.5) * 2 * self.speed * self.eng.deltaTime
         
         self.rect.x = self.x
         self.rect.y = self.y
-
-        pg.draw.rect(self.image, (0, 0, 255), self.image.get_bounding_rect(), width=1)
-        pg.draw.rect(self.image, (255, 0, 0), self.image.get_rect(), width=1)

@@ -6,7 +6,6 @@ from Scene import *
 from game_objects import *
 from enemies import *
 from player import *
-#from game import *
 import pygame as pg
 
 def main():
