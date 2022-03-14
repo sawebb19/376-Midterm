@@ -20,7 +20,7 @@ def main():
     s.updateables.add(p)
     score = Score(e)
     # FIXME: Attribute error
-    #s.updateables.add(score)
+    s.updateables.add(score)
     e.run()
 
 main()

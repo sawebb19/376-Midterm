@@ -65,7 +65,7 @@ class Player(DUGameObject):
 class Camera(UGameObject):
     pass
 
-class Score(UGameObject):
+class Score(DUGameObject):
     def __init__(self, eng):
         super().__init__()
         self.score = 0
