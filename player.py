@@ -31,6 +31,7 @@ class Player(DUGameObject):
         self.eng = eng
         self.height = 15
         self.fallcheck = False
+        self.failscreen = pg.Surface((1000,1000))
 
     def update(self):
         self.walk_time = self.walk_time + self.eng.deltaTime
@@ -88,6 +89,7 @@ class Player(DUGameObject):
                     if object.rect.y < self.rect.y + 128 and object.rect.y + 128 > self.rect.y:
                         print("Lose")
                         self.eng.screen.fill((0,0,0))
+                        self.eng.screen.blit(self.failscreen, (0,0))
                         time.sleep(5)
                         self.eng.end()
 
@@ -96,16 +98,24 @@ class Score(DUGameObject):
         super().__init__()
         self.score = 0
         self.eng = eng
+        self.image = pg.Surface((500,100))
+        self.endscreen = pg.Surface((1000,1000))
+        self.rect = self.image.get_rect()
 
     # Score is the same as number of seconds of game time
     def update(self):
         self.score = self.score + self.eng.deltaTime
         font = pg.font.Font('freesansbold.ttf', 32)
-        font.render('Score: ' + str(self.score), True, (0,255,0), (0,0,128))
+        text = font.render('Score: ' + str(self.score), True, (0,255,0), (0,0,128))
+        textRect = text.get_rect()
+        textRect.center = (0,0)
+        self.eng.screen.blit(self.image, (0,0))
+        #, 'Score: ' + str(self.score)
         # Win condition: Survive for 20 seconds
         if self.score >= 20:
             print("Win")
             self.eng.screen.fill((0,0,0))
+            self.eng.screen.blit(self.endscreen, (0,0))
             time.sleep(5)
             self.eng.end()
         print("Score: " + str(self.score))
