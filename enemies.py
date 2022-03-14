@@ -7,7 +7,7 @@ from game_objects import *
 import pygame as pg
 
 class Enemy(DUGameObject):
-    def __init__(self, eng, x=0, y=0):
+    def __init__(self, eng, x=0, y=0, lb=0, rb=1024):
         super().__init__()
         self.images = [[],[]] # [0][x] for facing left, [1][x] for facing right
         for i in range(1,11):
@@ -25,6 +25,8 @@ class Enemy(DUGameObject):
         self.walk_time = 0
         self.current_frame = 0
         self.eng = eng
+        self.lb = lb
+        self.rb = rb
 
     # TODO: add collision detection for player that results in a loss
     def update(self):
@@ -37,7 +39,7 @@ class Enemy(DUGameObject):
         self.image = self.images[self.direction][self.current_frame]
 
         # FIXME: flip sprite, go left when right edge of sprite hits right edge of screen
-        if (self.x <= 0 or self.x >= self.eng.width - 128):
+        if (self.x <= self.lb or self.x >= self.rb - 128):
             self.direction = abs(self.direction - 1)
         self.x = self.x + 100 * (self.direction - 0.5) * 2 * self.speed * self.eng.deltaTime
         
