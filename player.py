@@ -15,7 +15,7 @@ class Player(DUGameObject):
         # TODO: Have different sprites for player
         self.images = [[],[]] # [0][x] for facing left, [1][x] for facing right
         for i in range(1,11):
-            self.images[1].append(pg.image.load("./zombie/Walk ("+str(i)+").png").convert_alpha())
+            self.images[1].append(pg.image.load("./player/Walk ("+str(i)+").png").convert_alpha())
             self.images[1][i-1] = self.images[1][i-1].subsurface(self.images[1][i-1].get_bounding_rect())
             self.images[1][i-1] = pg.transform.scale(self.images[1][i-1], (128, 128)) 
             self.images[0].append(pg.transform.flip(self.images[1][i-1], True, False))
