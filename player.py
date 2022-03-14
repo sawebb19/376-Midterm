@@ -61,10 +61,11 @@ class Player(DUGameObject):
                     self.height = (self.height - 1) * -1
 
         for object in self.eng.scene.updateables:
-            if object is Enemy:
+            if isinstance(object, Enemy):
                 if object.rect.x < self.rect.x + 128 and object.rect.x + 128 > self.rect.x:
                     if object.rect.y < self.rect.y + 128 and object.rect.y + 128 > self.rect.y:
-                        print("Collision?")
+                        print("Lose")
+                        self.eng.end()
 
         
         pg.draw.rect(self.image, (0, 0, 255), self.image.get_bounding_rect(), width=1)
