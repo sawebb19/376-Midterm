@@ -42,7 +42,7 @@ class Player(DUGameObject):
         self.x = self.x + 100 * (self.direction - 0.5) * -2 * self.speed * self.eng.deltaTime
 
         if self.height != 15:
-            self.y += (40 * self.height + ((self.height ** 3) / 3)) * .03# * self.eng.deltaTime
+            self.y += (40 * self.height + ((self.height ** 3) / 3)) * .03
             self.height += 1
 
         self.rect.x = self.x
