@@ -42,7 +42,7 @@ class Player(DUGameObject):
         self.x = self.x + 100 * (self.direction - 0.5) * -2 * self.speed * self.eng.deltaTime
 
         if self.height != 15:
-            self.y += (40 * self.height + ((self.height ** 3) / 3)) * self.eng.deltaTime
+            self.y += (40 * self.height + ((self.height ** 3) / 3)) * .03# * self.eng.deltaTime
             self.height += 1
 
         self.rect.x = self.x
@@ -58,7 +58,7 @@ class Player(DUGameObject):
                     self.image = pg.transform.flip(self.image, True, False)
                     self.speed = -2
                 if (event.key == pg.K_SPACE and self.height == 15):
-                    self.height = (self.height - 1) * -1
+                    self.height = -14
 
         for object in self.eng.scene.updateables:
             if object is Enemy:
