@@ -62,9 +62,10 @@ class Player(DUGameObject):
 
         for object in self.eng.scene.updateables:
             if object is Enemy:
-                if object.image.get_rect().x < self.image.get_rect().x + 128 and object.image.get_rect().x + 128 > self.image.get_rect().x:
-                    if object.image.get_rect().y < self.image.get_rect().y + 128 and object.image.get_rect().y + 128 > self.image.get_rect().y:
+                if object.rect.x < self.rect.x + 128 and object.rect.x + 128 > self.rect.x:
+                    if object.rect.y < self.rect.y + 128 and object.rect.y + 128 > self.rect.y:
                         print("Collision?")
+
         
         pg.draw.rect(self.image, (0, 0, 255), self.image.get_bounding_rect(), width=1)
         pg.draw.rect(self.image, (255, 0, 0), self.image.get_rect(), width=1)

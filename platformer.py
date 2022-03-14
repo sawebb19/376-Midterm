@@ -19,7 +19,6 @@ def main():
     s.drawables.add(z)
     s.updateables.add(z)
     score = Score(e)
-    # FIXME: Attribute error
     s.updateables.add(score)
     e.run()
 
