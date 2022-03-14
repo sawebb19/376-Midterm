@@ -1,4 +1,6 @@
 import sys
+
+from enemies import Enemy
 sys.path.append("../CIS-376-Pygame-Engine")
 
 from Engine import *
@@ -59,8 +61,10 @@ class Player(DUGameObject):
                     self.height = (self.height - 1) * -1
 
         for object in self.eng.scene.updateables:
-            if self.x > self.eng.scene.updateables[object].x:
-                print("Collision?")
+            if object is Enemy:
+                if object.image.get_rect().x < self.image.get_rect().x + 128 and object.image.get_rect().x + 128 > self.image.get_rect().x:
+                    if object.image.get_rect().y < self.image.get_rect().y + 128 and object.image.get_rect().y + 128 > self.image.get_rect().y:
+                        print("Collision?")
         
         pg.draw.rect(self.image, (0, 0, 255), self.image.get_bounding_rect(), width=1)
         pg.draw.rect(self.image, (255, 0, 0), self.image.get_rect(), width=1)
@@ -74,7 +78,8 @@ class Score(DUGameObject):
     def update(self):
         self.score = self.score + self.eng.deltaTime
         # Win condition
-        if self.score >= 10000:
+        if self.score >= 20:
+            print("Win")
             self.eng.end()
         print(self.score)
 
