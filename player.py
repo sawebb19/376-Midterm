@@ -1,4 +1,5 @@
 import sys
+from tkinter import font
 
 from enemies import Enemy
 sys.path.append("../CIS-376-Pygame-Engine")
@@ -98,7 +99,7 @@ class Score(DUGameObject):
         super().__init__()
         self.score = 0
         self.eng = eng
-        self.image = pg.Surface((500,100))
+        self.image = pg.Surface((250,50))
         self.endscreen = pg.Surface((1000,1000))
         self.rect = self.image.get_rect()
 
@@ -106,11 +107,11 @@ class Score(DUGameObject):
     def update(self):
         self.score = self.score + self.eng.deltaTime
         font = pg.font.Font('freesansbold.ttf', 32)
-        text = font.render('Score: ' + str(self.score), True, (0,255,0), (0,0,128))
+        text = font.render('Score: ' + str(int(round(self.score, 2) * 1000)), True, (0,0,200))
         textRect = text.get_rect()
         textRect.center = (0,0)
         self.eng.screen.blit(self.image, (0,0))
-        #, 'Score: ' + str(self.score)
+        self.eng.screen.blit(text, (10,10))
         # Win condition: Survive for 20 seconds
         if self.score >= 20:
             print("Win")
