@@ -13,12 +13,12 @@ import time
 class Player(DUGameObject):
     def __init__(self, eng, x=0, y=0):
         super().__init__()
-
+        self.size = 64
         self.images = [[],[]] # [0][x] for facing left, [1][x] for facing right
         for i in range(1,11):
             self.images[1].append(pg.image.load("./player/Walk ("+str(i)+").png").convert_alpha())
             self.images[1][i-1] = self.images[1][i-1].subsurface(self.images[1][i-1].get_bounding_rect())
-            self.images[1][i-1] = pg.transform.scale(self.images[1][i-1], (128, 128)) 
+            self.images[1][i-1] = pg.transform.scale(self.images[1][i-1], (self.size, self.size)) 
             self.images[0].append(pg.transform.flip(self.images[1][i-1], True, False))
         self.image = self.images[1][0]
         self.rect = self.image.get_rect()
@@ -47,24 +47,24 @@ class Player(DUGameObject):
             velocity = (40 * self.height + ((self.height ** 3) / 3)) * .03
             self.y += velocity
             if velocity >= 0:
-                if abs(self.rect.y - 355) < 10:
-                    if (self.rect.x > 600 - 64 and self.rect.x < 950 - 64) or (self.rect.x > 74 - 64 and self.rect.x < 424 - 64):
+                if abs(self.rect.y - 355 - 64) < 10:
+                    if (self.rect.x > 600 - (self.size / 2) and self.rect.x < 950 - (self.size / 2)) or (self.rect.x > 74 - (self.size / 2) and self.rect.x < 424 - (self.size / 2)):
                         self.height = 14
-                        self.y = 355
+                        self.y = 355 + 64
                         self.fallcheck = True
                     else:
-                        self.height = 10
-                if abs(self.rect.y - 195) < 10:
-                    if (self.rect.x > 360 - 64 and self.rect.x < 660 - 64):
+                        self.height = 5
+                if abs(self.rect.y - 195 - 64) < 10:
+                    if (self.rect.x > 360 - (self.size / 2) and self.rect.x < 660 - (self.size / 2)):
                         self.height = 14
-                        self.y = 195
+                        self.y = 195 + 64
                         self.fallcheck = True
                     else:
-                        self.height = 10
+                        self.height = 5
             self.height += 1
 
-        if self.rect.y > 515:
-            self.y = 515
+        if self.rect.y > 515 + 64:
+            self.y = 515 + 64
             self.height = 15
             self.fallcheck = False
 
@@ -86,8 +86,8 @@ class Player(DUGameObject):
         # Check for losing condition (player collides with enemy)
         for object in self.eng.scene.updateables:
             if isinstance(object, Enemy):
-                if object.rect.x < self.rect.x + 128 and object.rect.x + 128 > self.rect.x:
-                    if object.rect.y < self.rect.y + 128 and object.rect.y + 128 > self.rect.y:
+                if object.rect.x < self.rect.x + self.size and object.rect.x + self.size > self.rect.x:
+                    if object.rect.y < self.rect.y + self.size and object.rect.y + self.size > self.rect.y:
                         print("Lose")
                         self.eng.screen.fill((0,0,0))
                         self.eng.screen.blit(self.failscreen, (0,0))

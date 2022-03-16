@@ -12,7 +12,7 @@ def main():
     s = Scene('Platformer', [], [])
     e = Engine('Midterm', s)
     e.screen.blit(pg.image.load("./assets/map.png").convert_alpha(), (0,0))
-    p = Player(e, x=10, y=515)
+    p = Player(e, x=10, y=515+64)
     s.drawables.add(p)
     s.updateables.add(p)
     z = Enemy(e, x=850, y=515)
